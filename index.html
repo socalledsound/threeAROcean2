@@ -162,33 +162,35 @@ function initialize()
 		
 	// // water
 	
-	// let geometry1 = new THREE.TorusGeometry(1,1, 64, 256); // radius, tube radius
-	// let texture1 = loader.load( 'water-2.jpg' );
-	// // let texture = loader.load( 'images/color-grid.png' );	
-	// texture1.wrapS = THREE.RepeatWrapping;
-	// texture1.wrapT = THREE.RepeatWrapping;
-	// texture1.repeat.set(8,2);
+	let geometry1 = new THREE.TorusGeometry(1,1, 64, 256); // radius, tube radius
+	let texture1 = loader.load( 'water-2.jpg' );
+	// let texture = loader.load( 'images/color-grid.png' );	
+	texture1.wrapS = THREE.RepeatWrapping;
+	texture1.wrapT = THREE.RepeatWrapping;
+	texture1.repeat.set(8,2);
 		
-	// // shader-based material
-	// material1 = new THREE.ShaderMaterial({
-	// 	uniforms: {
-	// 		time: { value: 1.0 },
-	// 		baseTexture: { value: texture1 },
-	// 	},
-	// 	vertexShader: document.getElementById( 'vertexShader' ).textContent,
-	// 	fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
-	// 	transparent: true,
-	// });
+	// shader-based material
+	material1 = new THREE.ShaderMaterial({
+		uniforms: {
+			time: { value: 1.0 },
+			baseTexture: { value: texture1 },
+		},
+		vertexShader: document.getElementById( 'vertexShader' ).textContent,
+		fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+		transparent: true,
+	});
 	
-	// mesh1 = new THREE.Mesh( geometry1, material1 );
-	// mesh1.rotation.x = -Math.PI/2;
+	mesh1 = new THREE.Mesh( geometry1, material1 );
+	mesh1.rotation.x = -Math.PI/2;
 	// mesh1.scale.z = 0.10;
-	// markerRoot1.add( mesh1 
+
+
+
 
 				// Water
 				light = new THREE.DirectionalLight( 0xffffff, 0.8 );
 				scene.add( light );
-				var waterGeometry = new THREE.PlaneBufferGeometry( 10000, 10000 );
+				var waterGeometry = new THREE.PlaneBufferGeometry( 1000, 1000 );
 
 				water = new THREE.Water(
 					waterGeometry,
@@ -211,9 +213,29 @@ function initialize()
 
 				water.rotation.x = - Math.PI / 2;
 
+
+
+	// shader-based material
+	// material1 = new THREE.ShaderMaterial({
+	// 	uniforms: {
+	// 		time: { value: 1.0 },
+	// 		baseTexture: { value: texture1 },
+	// 	},
+	// 	vertexShader: document.getElementById( 'vertexShader' ).textContent,
+	// 	fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+	// 	transparent: true,
+	// });
+
+
 	
-	markerRoot1.add( water );
+	//markerRoot1.add( water );
 	
+
+
+	markerRoot1.add( mesh1 );
+
+
+
 	// the inside of the hole
 	let geometry2	= new THREE.CylinderGeometry(1,1, 4, 32,1);
 	let texture2 = loader.load( 'tiles.jpg', render );
@@ -230,8 +252,8 @@ function initialize()
 	markerRoot1.add( mesh2 );
 	
 	// the invisibility cloak (ring; has circular hole)
-	let geometry0 = new THREE.BoxGeometry(10,10, 10);
-	//let geometry0 = new THREE.RingGeometry(1,9, 32);
+	//let geometry0 = new THREE.BoxGeometry(10,10, 10);
+	let geometry0 = new THREE.RingGeometry(1,9, 32);
 	let material0 = new THREE.MeshBasicMaterial({
 		// map: loader.load( 'images/color-grid.png' ), // for testing placement
 		colorWrite: false
@@ -245,7 +267,7 @@ function initialize()
 
 function update()
 {
-	material0.uniforms.time.value += deltaTime;
+	material1.uniforms.time.value += deltaTime;
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
