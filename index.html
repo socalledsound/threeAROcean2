@@ -72,7 +72,7 @@ var arToolkitSource, arToolkitContext;
 
 var markerRoot1;
 
-var material1, mesh1;
+var material1, mesh1, light, water;
 
 initialize();
 animate();
@@ -185,7 +185,8 @@ function initialize()
 	// markerRoot1.add( mesh1 
 
 				// Water
-
+				light = new THREE.DirectionalLight( 0xffffff, 0.8 );
+				scene.add( light );
 				var waterGeometry = new THREE.PlaneBufferGeometry( 10000, 10000 );
 
 				water = new THREE.Water(
